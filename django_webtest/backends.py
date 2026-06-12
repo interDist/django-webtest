@@ -30,8 +30,14 @@ class WebtestUserWithoutPermissionsBackend(WebtestUserBackend):
     Auth backend that passes-through any permission check to further backends
     """
 
-    def get_perm(self, user_obj, perm, obj=None):
+    def has_perm(self, user_obj, perm, obj=None):
         # Indicate that this backend does not handle permissions and
         # allow Django's django.contrib.auth.models._user_has_perm
+        # utility to move on to other enabled authentication backends.
+        return False
+
+    def has_module_perms(self, user_obj, app_label):
+        # Indicate that this backend does not handle permissions and
+        # allow Django's django.contrib.auth.models._user_has_module_perms
         # utility to move on to other enabled authentication backends.
         return False
